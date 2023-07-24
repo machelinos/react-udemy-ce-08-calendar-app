@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import { addHours } from 'date-fns'
+import { useMemo, useState } from 'react'
+import { addHours, differenceInSeconds } from 'date-fns'
+import Swal from 'sweetalert2'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -10,6 +11,14 @@ export const CalendarForm = () => {
     start: new Date(),
     end: addHours(new Date(), 2),
   })
+
+  const [hasFormBeeenSubmitted, setHasFormBeeenSubmitted] = useState(false)
+
+  const inputClass = useMemo(() => {
+    if (!hasFormBeeenSubmitted) return ''
+
+    return formValues.title.length <= 0 ? 'is-invalid' : ''
+  }, [hasFormBeeenSubmitted, formValues.title])
 
   const handleDateChange = (event, changing) => {
     setFormValues({
@@ -26,11 +35,27 @@ export const CalendarForm = () => {
     })
   }
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault()
+    setHasFormBeeenSubmitted(true)
+
+    const timeDifference = differenceInSeconds(formValues.end, formValues.start)
+
+    if (isNaN(timeDifference) || timeDifference <= 0) {
+      Swal.fire('Error', 'Invalid dates', 'error')
+      return
+    }
+
+    if (formValues.title.length <= 0) return
+
+    console.log(formValues)
+  }
+
   return (
     <>
       <h1> New Event </h1>
       <hr />
-      <form className="container">
+      <form className="container" onSubmit={handleFormSubmit}>
         <div className="form-group mb-2">
           <label>Star date</label>
           <DatePicker
@@ -63,7 +88,7 @@ export const CalendarForm = () => {
           <label>Title and Notes</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${inputClass}`}
             placeholder="Event title"
             name="title"
             autoComplete="off"
