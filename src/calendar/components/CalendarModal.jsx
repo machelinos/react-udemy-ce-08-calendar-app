@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Modal from 'react-modal'
 
 const customStyles = {
@@ -14,12 +15,20 @@ const customStyles = {
 Modal.setAppElement('#root')
 
 export const CalendarModal = ({ children }) => {
+  const [isOpen, setIsOpen] = useState(true)
   const handleModalClose = () => {
-    console.log('Closing modal')
+    setIsOpen(false)
   }
 
   return (
-    <Modal isOpen={true} onRequestClose={handleModalClose} style={customStyles}>
+    <Modal
+      className="modal"
+      closeTimeoutMS={200}
+      isOpen={isOpen}
+      overlayClassName="modal-fondo"
+      onRequestClose={handleModalClose}
+      style={customStyles}
+    >
       {children}
     </Modal>
   )
