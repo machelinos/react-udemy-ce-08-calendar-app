@@ -5,6 +5,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { CalendarEvent, Navbar } from '../'
 import { localizer } from '../../helpers'
 import { useState } from 'react'
+import { CalendarModal } from '../components/CalendarModal'
 
 const events = [
   {
@@ -68,6 +69,16 @@ export const CalendarPage = () => {
         onSelectEvent={handleEventSelect}
         onView={handleViewChange}
       />
+
+      <CalendarModal>
+        <h1>Modal open</h1>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus
+          architecto labore neque? Tempora ut eveniet provident repudiandae
+          eligendi vero, quas quidem laborum repellendus? Repellat reiciendis
+          esse, blanditiis voluptatem adipisci at?
+        </p>
+      </CalendarModal>
     </>
   )
 }
