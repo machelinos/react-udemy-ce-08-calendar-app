@@ -3,19 +3,20 @@ import { addHours, differenceInSeconds } from 'date-fns'
 import Swal from 'sweetalert2'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { useCalendarSlice } from '../../hooks'
+import { useCalendarSlice, useUiSlice } from '../../hooks'
 
 export const CalendarForm = () => {
   const [formValues, setFormValues] = useState({
     title: 'Note Title',
     notes: 'Some notes text',
-    start: new Date(),
-    end: addHours(new Date(), 2),
+    start: new Date().getTime(),
+    end: addHours(new Date(), 2).getTime(),
   })
 
   const [hasFormBeeenSubmitted, setHasFormBeeenSubmitted] = useState(false)
 
-  const { activeEvent } = useCalendarSlice()
+  const { activeEvent, handleAddNewEvent } = useCalendarSlice()
+  const { closeModal } = useUiSlice()
   const inputClass = useMemo(() => {
     if (!hasFormBeeenSubmitted) return ''
 
@@ -37,7 +38,7 @@ export const CalendarForm = () => {
     })
   }
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault()
     setHasFormBeeenSubmitted(true)
 
@@ -50,7 +51,12 @@ export const CalendarForm = () => {
 
     if (formValues.title.length <= 0) return
 
-    console.log(formValues)
+    if (!formValues._id) {
+      handleAddNewEvent({ ...formValues, _id: new Date().getTime() })
+    } else {
+      // Update event
+    }
+    closeModal()
   }
 
   useEffect(() => {

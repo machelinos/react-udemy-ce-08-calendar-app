@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { setActiveEvent } from '../store'
+import { setActiveEvent, startAddingNewEvent } from '../store'
 
 export const useCalendarSlice = () => {
   const dispatch = useDispatch()
@@ -9,9 +9,14 @@ export const useCalendarSlice = () => {
     dispatch(setActiveEvent(event))
   }
 
+  const handleAddNewEvent = (event) => {
+    dispatch(startAddingNewEvent(event))
+  }
+
   return {
     activeEvent,
     events,
+    handleAddNewEvent,
     handleSetActiveEvent,
   }
 }
