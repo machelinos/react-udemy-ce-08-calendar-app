@@ -9,13 +9,18 @@ export const CalendarForm = () => {
   const [formValues, setFormValues] = useState({
     title: 'Note Title',
     notes: 'Some notes text',
-    start: new Date().getTime(),
-    end: addHours(new Date(), 2).getTime(),
+    start: new Date(),
+    end: addHours(new Date(), 2),
   })
 
   const [hasFormBeeenSubmitted, setHasFormBeeenSubmitted] = useState(false)
 
-  const { activeEvent, handleAddNewEvent } = useCalendarSlice()
+  const {
+    activeEvent,
+    handleSetActiveEvent,
+    handleAddNewEvent,
+    handleUpdateEvent,
+  } = useCalendarSlice()
   const { closeModal } = useUiSlice()
   const inputClass = useMemo(() => {
     if (!hasFormBeeenSubmitted) return ''
@@ -54,8 +59,9 @@ export const CalendarForm = () => {
     if (!formValues._id) {
       handleAddNewEvent({ ...formValues, _id: new Date().getTime() })
     } else {
-      // Update event
+      handleUpdateEvent({ ...formValues })
     }
+    handleSetActiveEvent(null)
     closeModal()
   }
 

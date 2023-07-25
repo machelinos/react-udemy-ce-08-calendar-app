@@ -5,8 +5,8 @@ const tempEvent = {
   _id: 123422,
   title: '',
   notes: '',
-  start: new Date().getTime(),
-  end: addHours(new Date(), 2).getTime(),
+  start: new Date(),
+  end: addHours(new Date(), 2),
   bgColor: '#fafafa',
   user: {
     _id: '123',
@@ -27,8 +27,17 @@ export const calendarSlice = createSlice({
     addNewEvent: (state, { payload }) => {
       state.events.push(payload)
     },
+    updateEvent: (state, { payload }) => {
+      state.events = state.events.map((event) => {
+        if (event._id === payload._id) {
+          return payload
+        }
+        return event
+      })
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addNewEvent, setActiveEvent } = calendarSlice.actions
+export const { addNewEvent, setActiveEvent, updateEvent } =
+  calendarSlice.actions
