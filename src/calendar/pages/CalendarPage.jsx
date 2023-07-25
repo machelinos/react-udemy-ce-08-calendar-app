@@ -35,7 +35,6 @@ export const CalendarPage = () => {
   }
 
   const handleEventDoubleClick = (event) => {
-    console.log(event)
     openModal()
   }
 
@@ -44,7 +43,6 @@ export const CalendarPage = () => {
   }
 
   const handleViewChange = (event) => {
-    console.log(event)
     localStorage.setItem('lastView', event)
   }
 
