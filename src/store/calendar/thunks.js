@@ -1,4 +1,4 @@
-import { addNewEvent, updateEvent } from './calendarSlice'
+import { addNewEvent, deleteEvent, updateEvent } from './calendarSlice'
 
 export const startAddingNewEvent = (calendarEvent) => {
   return async (dispatch) => {
@@ -10,5 +10,11 @@ export const startAddingNewEvent = (calendarEvent) => {
 export const startUpdatingEvent = (calendarEvent) => {
   return async (dispatch) => {
     dispatch(updateEvent(calendarEvent))
+  }
+}
+
+export const startDeletingEvent = (calendarEvent) => {
+  return async (dispatch) => {
+    dispatch(deleteEvent(calendarEvent))
   }
 }

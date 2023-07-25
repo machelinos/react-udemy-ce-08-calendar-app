@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   setActiveEvent,
   startAddingNewEvent,
+  startDeletingEvent,
   startUpdatingEvent,
 } from '../store'
 
@@ -17,6 +18,10 @@ export const useCalendarSlice = () => {
     dispatch(startAddingNewEvent(event))
   }
 
+  const handleDeleteEvent = (event) => {
+    dispatch(startDeletingEvent(event))
+  }
+
   const handleUpdateEvent = (event) => {
     dispatch(startUpdatingEvent(event))
   }
@@ -25,6 +30,7 @@ export const useCalendarSlice = () => {
     activeEvent,
     events,
     handleAddNewEvent,
+    handleDeleteEvent,
     handleSetActiveEvent,
     handleUpdateEvent,
   }

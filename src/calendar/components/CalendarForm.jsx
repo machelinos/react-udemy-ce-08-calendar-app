@@ -19,6 +19,7 @@ export const CalendarForm = () => {
     activeEvent,
     handleSetActiveEvent,
     handleAddNewEvent,
+    handleDeleteEvent,
     handleUpdateEvent,
   } = useCalendarSlice()
   const { closeModal } = useUiSlice()
@@ -135,10 +136,26 @@ export const CalendarForm = () => {
           </small>
         </div>
 
-        <button type="submit" className="btn btn-outline-primary btn-block">
-          <i className="far fa-save"></i>
-          <span> Save</span>
-        </button>
+        <div className="d-flex justify-content-between">
+          <button type="submit" className="btn btn-outline-primary btn-block">
+            <i className="far fa-save"></i>
+            <span> Save</span>
+          </button>
+
+          {formValues._id && (
+            <button
+              className="btn btn-danger btn-block ml-2"
+              onClick={() => {
+                handleDeleteEvent(formValues)
+                handleSetActiveEvent(null)
+                closeModal()
+              }}
+            >
+              <i className="far fa-delete"></i>
+              <span> Delete</span>
+            </button>
+          )}
+        </div>
       </form>
     </>
   )
