@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { addHours, differenceInSeconds } from 'date-fns'
 import Swal from 'sweetalert2'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import { useCalendarSlice } from '../../hooks'
 
 export const CalendarForm = () => {
   const [formValues, setFormValues] = useState({
@@ -14,6 +15,7 @@ export const CalendarForm = () => {
 
   const [hasFormBeeenSubmitted, setHasFormBeeenSubmitted] = useState(false)
 
+  const { activeEvent } = useCalendarSlice()
   const inputClass = useMemo(() => {
     if (!hasFormBeeenSubmitted) return ''
 
@@ -51,13 +53,19 @@ export const CalendarForm = () => {
     console.log(formValues)
   }
 
+  useEffect(() => {
+    if (activeEvent !== null) {
+      setFormValues({ ...activeEvent })
+    }
+  }, [activeEvent])
+
   return (
     <>
       <h1> New Event </h1>
       <hr />
       <form className="container" onSubmit={handleFormSubmit}>
         <div className="form-group mb-2">
-          <label>Star date</label>
+          <label>Start date</label>
           <DatePicker
             className="form-control"
             dateFormat="Pp"
