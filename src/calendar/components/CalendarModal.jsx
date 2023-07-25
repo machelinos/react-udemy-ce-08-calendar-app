@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import Modal from 'react-modal'
+import { useUiSlice } from '../../hooks'
 
 const customStyles = {
   content: {
@@ -15,16 +15,16 @@ const customStyles = {
 Modal.setAppElement('#root')
 
 export const CalendarModal = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(true)
+  const { isDateModalOpen, closeModal } = useUiSlice()
   const handleModalClose = () => {
-    setIsOpen(false)
+    closeModal()
   }
 
   return (
     <Modal
       className="modal"
       closeTimeoutMS={200}
-      isOpen={isOpen}
+      isOpen={isDateModalOpen}
       overlayClassName="modal-fondo"
       onRequestClose={handleModalClose}
       style={customStyles}

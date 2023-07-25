@@ -5,6 +5,8 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 import { CalendarEvent, CalendarForm, CalendarModal, Navbar } from '../'
 import { localizer } from '../../helpers'
+import { setModalOpen } from '../../store/ui/uiSlice'
+import { useUiSlice } from '../../hooks'
 
 const events = [
   {
@@ -25,6 +27,8 @@ export const CalendarPage = () => {
     localStorage.getItem('lastView') || 'month',
   )
 
+  const { openModal } = useUiSlice()
+
   const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
       background: '#347cf7',
@@ -40,6 +44,7 @@ export const CalendarPage = () => {
 
   const handleEventDoubleClick = (event) => {
     console.log(event)
+    openModal()
   }
 
   const handleEventSelect = (event) => {
