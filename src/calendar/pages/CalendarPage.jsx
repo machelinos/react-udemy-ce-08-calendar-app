@@ -9,7 +9,7 @@ import {
   CalendarModal,
   Navbar,
 } from '../'
-import { localizer } from '../../helpers'
+import { getEnvVariables, localizer } from '../../helpers'
 import { useCalendarSlice, useUiSlice } from '../../hooks'
 
 export const CalendarPage = () => {
