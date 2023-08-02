@@ -30,7 +30,7 @@ export const LoginPage = () => {
     handleInputChange: handleRegisterInputChange,
   } = useForm(registerFields)
 
-  const { errorMessage, initLogin } = useAuthStore()
+  const { errorMessage, initLogin, initRegister } = useAuthStore()
 
   const handleLoginSubmit = (event) => {
     event.preventDefault()
@@ -39,11 +39,16 @@ export const LoginPage = () => {
 
   const handleRegisterSubmit = (event) => {
     event.preventDefault()
-    console.log({
-      registerName,
-      registerEmail,
-      registerPassword,
-      registerPasswordConfirm,
+
+    if (registerPassword !== registerPasswordConfirm) {
+      Swal.fire('Register error', 'Passwords must match', 'error')
+      return
+    }
+
+    initRegister({
+      name: registerName,
+      email: registerEmail,
+      password: registerPassword,
     })
   }
 

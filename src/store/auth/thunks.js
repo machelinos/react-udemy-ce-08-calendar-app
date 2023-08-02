@@ -22,3 +22,30 @@ export const startLogin = ({ email, password }) => {
     }
   }
 }
+
+export const startRegister = ({ name, email, password }) => {
+  return async (dispatch) => {
+    dispatch(setChecking())
+
+    try {
+      const { data } = await calendarApi.post('/auth/new', {
+        name,
+        email,
+        password,
+      })
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('token-init-date', new Date().getTime())
+      dispatch(loginUser({ name: data.name, uid: data.uid }))
+    } catch (error) {
+      dispatch(
+        logoutUser(
+          error.response?.data?.msg ||
+            Object.values(error.response.data.errors)[0].msg,
+        ),
+      )
+      setTimeout(() => {
+        dispatch(clearErrorMessage())
+      }, 10)
+    }
+  }
+}
