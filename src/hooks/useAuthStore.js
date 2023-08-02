@@ -4,7 +4,7 @@ import { loginUser, logoutUser } from '../store'
 import { calendarApi } from '../api'
 
 export const useAuthStore = () => {
-  const { errorMessage, status } = useSelector((state) => state.auth)
+  const { errorMessage, status, user } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
   const initLogin = ({ email, password }) => {
@@ -13,6 +13,11 @@ export const useAuthStore = () => {
 
   const initRegister = ({ name, email, password }) => {
     dispatch(startRegister({ name, email, password }))
+  }
+
+  const initLogout = () => {
+    localStorage.clear()
+    dispatch(logoutUser())
   }
 
   const checkTokenAuth = async () => {
@@ -36,8 +41,10 @@ export const useAuthStore = () => {
   return {
     errorMessage,
     status,
+    user,
     checkTokenAuth,
     initLogin,
+    initLogout,
     initRegister,
   }
 }
