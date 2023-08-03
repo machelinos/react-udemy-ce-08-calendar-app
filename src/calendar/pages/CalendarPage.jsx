@@ -10,7 +10,7 @@ import {
   Navbar,
 } from '../'
 import { localizer } from '../../helpers'
-import { useCalendarSlice, useUiSlice } from '../../hooks'
+import { useAuthStore, useCalendarSlice, useUiSlice } from '../../hooks'
 import { useEffect } from 'react'
 
 export const CalendarPage = () => {
@@ -18,15 +18,18 @@ export const CalendarPage = () => {
     localStorage.getItem('lastView') || 'month',
   )
 
+  const { user } = useAuthStore()
   const { events, handleLoadEvents, handleSetActiveEvent } = useCalendarSlice()
 
   const { openModal } = useUiSlice()
 
   const eventStyleGetter = (event, start, end, isSelected) => {
+    const opacity = event.user._id === user.uid ? 0.8 : 0.5
+
     const style = {
       background: '#347cf7',
       borderRadius: '0px',
-      opacity: 0.8,
+      opacity,
       color: 'white',
     }
 
