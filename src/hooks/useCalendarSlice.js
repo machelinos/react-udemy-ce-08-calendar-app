@@ -3,6 +3,7 @@ import {
   setActiveEvent,
   startAddingNewEvent,
   startDeletingEvent,
+  startLoadingEvents,
   startUpdatingEvent,
 } from '../store'
 
@@ -26,11 +27,16 @@ export const useCalendarSlice = () => {
     dispatch(startUpdatingEvent(event))
   }
 
+  const handleLoadEvents = () => {
+    dispatch(startLoadingEvents())
+  }
+
   return {
     activeEvent,
     events,
     handleAddNewEvent,
     handleDeleteEvent,
+    handleLoadEvents,
     handleSetActiveEvent,
     handleUpdateEvent,
   }

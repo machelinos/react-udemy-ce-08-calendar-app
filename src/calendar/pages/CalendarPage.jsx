@@ -11,13 +11,14 @@ import {
 } from '../'
 import { getEnvVariables, localizer } from '../../helpers'
 import { useCalendarSlice, useUiSlice } from '../../hooks'
+import { useEffect } from 'react'
 
 export const CalendarPage = () => {
   const [lastView, setLastView] = useState(
     localStorage.getItem('lastView') || 'month',
   )
 
-  const { events, handleSetActiveEvent } = useCalendarSlice()
+  const { events, handleLoadEvents, handleSetActiveEvent } = useCalendarSlice()
 
   const { openModal } = useUiSlice()
 
@@ -45,6 +46,10 @@ export const CalendarPage = () => {
   const handleViewChange = (event) => {
     localStorage.setItem('lastView', event)
   }
+
+  useEffect(() => {
+    handleLoadEvents()
+  }, [])
 
   return (
     <>
