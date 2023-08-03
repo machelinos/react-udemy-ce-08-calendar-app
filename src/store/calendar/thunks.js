@@ -13,7 +13,13 @@ export const startAddingNewEvent = (calendarEvent) => {
     const { user } = getState().auth
     try {
       const { data } = await calendarApi.post('/events', calendarEvent)
-      dispatch(addNewEvent({ ...calendarEvent, id: data.event.id, user }))
+      dispatch(
+        addNewEvent({
+          ...calendarEvent,
+          id: data.event.id,
+          user: { _id: user.uid, name: user.name },
+        }),
+      )
     } catch (error) {
       console.log(error)
       Swal.fire('Error', 'Couldnt save your event, please try again!', 'error')
@@ -21,7 +27,7 @@ export const startAddingNewEvent = (calendarEvent) => {
   }
 }
 
-export const startUpdatingEvent = (calendarEvent, user) => {
+export const startUpdatingEvent = (calendarEvent) => {
   return async (dispatch, getState) => {
     const { user } = getState().auth
     if (user.uid !== calendarEvent.user._id) {
@@ -32,10 +38,7 @@ export const startUpdatingEvent = (calendarEvent, user) => {
       )
     }
     try {
-      const { data } = await calendarApi.put(
-        `/events/${calendarEvent.id}`,
-        calendarEvent,
-      )
+      await calendarApi.put(`/events/${calendarEvent.id}`, calendarEvent)
       dispatch(updateEvent(calendarEvent))
     } catch (error) {
       console.log(error)
@@ -44,8 +47,22 @@ export const startUpdatingEvent = (calendarEvent, user) => {
 }
 
 export const startDeletingEvent = (calendarEvent) => {
-  return async (dispatch) => {
-    dispatch(deleteEvent(calendarEvent))
+  return async (dispatch, getState) => {
+    const { user } = getState().auth
+    if (user.uid !== calendarEvent.user._id) {
+      return Swal.fire(
+        'Not authorized',
+        'Only event creator can delete event',
+        'error',
+      )
+    }
+
+    try {
+      await calendarApi.delete(`/events/${calendarEvent.id}`, calendarEvent)
+      dispatch(deleteEvent(calendarEvent))
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

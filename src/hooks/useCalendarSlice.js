@@ -6,7 +6,6 @@ import {
   startLoadingEvents,
   startUpdatingEvent,
 } from '../store'
-import { useAuthStore } from './useAuthStore'
 
 export const useCalendarSlice = () => {
   const dispatch = useDispatch()

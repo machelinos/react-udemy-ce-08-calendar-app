@@ -24,7 +24,8 @@ export const CalendarPage = () => {
   const { openModal } = useUiSlice()
 
   const eventStyleGetter = (event, start, end, isSelected) => {
-    const opacity = event.user._id === user.uid ? 0.8 : 0.5
+    const opacity =
+      event.user._id === user.uid || event.user._id === user._id ? 0.8 : 0.5
 
     const style = {
       background: '#347cf7',

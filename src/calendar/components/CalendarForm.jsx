@@ -142,12 +142,13 @@ export const CalendarForm = () => {
             <span> Save</span>
           </button>
 
-          {formValues._id && (
+          {formValues.id && (
             <button
               className="btn btn-danger btn-block ml-2"
+              type="button"
               onClick={() => {
-                handleDeleteEvent(formValues)
                 handleSetActiveEvent(null)
+                handleDeleteEvent(formValues)
                 closeModal()
               }}
             >
