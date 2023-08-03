@@ -57,7 +57,7 @@ export const CalendarForm = () => {
 
     if (formValues.title.length <= 0) return
 
-    if (!formValues._id) {
+    if (!formValues.id) {
       handleAddNewEvent({ ...formValues })
     } else {
       handleUpdateEvent({ ...formValues })

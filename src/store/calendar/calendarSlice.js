@@ -28,11 +28,11 @@ export const calendarSlice = createSlice({
       state.events.push(payload)
     },
     deleteEvent: (state, { payload }) => {
-      state.events = state.events.filter((event) => event._id !== payload._id)
+      state.events = state.events.filter((event) => event.id !== payload.id)
     },
     updateEvent: (state, { payload }) => {
       state.events = state.events.map((event) => {
-        if (event._id === payload._id) {
+        if (event.id === payload.id) {
           return payload
         }
         return event

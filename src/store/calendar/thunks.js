@@ -21,9 +21,25 @@ export const startAddingNewEvent = (calendarEvent) => {
   }
 }
 
-export const startUpdatingEvent = (calendarEvent) => {
-  return async (dispatch) => {
-    dispatch(updateEvent(calendarEvent))
+export const startUpdatingEvent = (calendarEvent, user) => {
+  return async (dispatch, getState) => {
+    const { user } = getState().auth
+    if (user.uid !== calendarEvent.user._id) {
+      return Swal.fire(
+        'Not authorized',
+        'Only event creator can modify event',
+        'error',
+      )
+    }
+    try {
+      const { data } = await calendarApi.put(
+        `/events/${calendarEvent.id}`,
+        calendarEvent,
+      )
+      dispatch(updateEvent(calendarEvent))
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

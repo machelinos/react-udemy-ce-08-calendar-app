@@ -9,7 +9,7 @@ import {
   CalendarModal,
   Navbar,
 } from '../'
-import { getEnvVariables, localizer } from '../../helpers'
+import { localizer } from '../../helpers'
 import { useCalendarSlice, useUiSlice } from '../../hooks'
 import { useEffect } from 'react'
 
@@ -49,6 +49,7 @@ export const CalendarPage = () => {
 
   useEffect(() => {
     handleLoadEvents()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
