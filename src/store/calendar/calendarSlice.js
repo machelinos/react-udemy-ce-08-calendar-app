@@ -50,12 +50,18 @@ export const calendarSlice = createSlice({
         }
       })
     },
+    clearCalendar: (state) => {
+      state.isLoadingEvents = true
+      state.events = []
+      state.activeEvent = null
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
 export const {
   addNewEvent,
+  clearCalendar,
   deleteEvent,
   setActiveEvent,
   setEvents,

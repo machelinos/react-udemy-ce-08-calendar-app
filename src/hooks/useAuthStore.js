@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { startLogin, startRegister } from '../store/auth/thunks'
-import { loginUser, logoutUser } from '../store'
+import { clearCalendar, loginUser, logoutUser } from '../store'
 import { calendarApi } from '../api'
 
 export const useAuthStore = () => {
@@ -17,6 +17,7 @@ export const useAuthStore = () => {
 
   const initLogout = () => {
     localStorage.clear()
+    dispatch(clearCalendar())
     dispatch(logoutUser())
   }
 
